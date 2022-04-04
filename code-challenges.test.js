@@ -10,26 +10,108 @@
 // Reminder: The test will call your function
 // Run the file with the following command: $ yarn jest
 
+
 // describe("functionName", () => {
-
 //   it("does something", () => {
-
 //     expect(functionName(parameter)).toEqual("exact output")
 //   })
 // })
+
 
 // --------------------1) Create a function that takes in an array of objects and returns an array with a sentence about each person with their name capitalized.
 
 // a) Create a test with an expect statement using the variable provided.
 
-// const people = [
-//   { name: "ford prefect", occupation: "a hitchhiker" },
-//   { name: "zaphod beeblebrox", occupation: "president of the galaxy" },
-//   { name: "arthur dent", occupation: "a radio employee" }
-// ]
+const people = [
+  { name: "ford prefect", occupation: "a hitchhiker" },
+  { name: "zaphod beeblebrox", occupation: "president of the galaxy" },
+  { name: "arthur dent", occupation: "a radio employee" }
+]
+
+// ----------------------------------------------------------------------------------------------------
+
+
+describe("jobPlusName", () => {
+  
+  const people = [
+    { name: "ford prefect", occupation: "a hitchhiker" },
+    { name: "zaphod beeblebrox", occupation: "president of the galaxy" },
+    { name: "arthur dent", occupation: "a radio employee" }
+  ]
+  it("takes in an array of objects and returns an array with a sentence about each person with their name capitalized", () => {
+
+    expect(jobPlusName(people)).toEqual(["Ford Prefect is a hitchhiker.", "Zaphod Beeblebrox is president of the galaxy.", "Arthur Dent is a radio employee."])
+  })
+})
+
+// ReferenceError: jobPlusName is not defined, good fail
+
 // Expected output: ["Ford Prefect is a hitchhiker.", "Zaphod Beeblebrox is president of the galaxy.", "Arthur Dent is a radio employee."]
 
 // b) Create the function that makes the test pass.
+
+// PSEUDOCODE:
+// create function named jobPlusName
+  // takes in an array (of objects)
+// REMEMBER to use array.name or array.occupation to access those values
+// create a container called newArray = []
+// iterate through the array of objects
+  // for each name, separate the first and last name
+    // capitalize the FIRST LETTER of both the first and last name 
+      // concatenate them together again
+  // occupation just needs to be concatenated with + "."
+  // .push() all the pieces to make a sentence
+    // example: "Ford Prefect is a hitchhiker." etc etc
+      // use the container (newArray)
+// return the container
+
+const jobPlusName = (array) => {
+  let newArray = []; // <---- container for final output
+  for (let i = 0; i < array.length; i++) { // <---- iteration through array of objects
+    let firstName = array[i].name.split(" ")[0]; // <---- First name using .split(" ")
+    let lastName = array[i].name.split(" ")[1]; // <---- same thing, but with Last name
+    let firstLetter = firstName.charAt(0).toUpperCase(); // <---- Capitalizing only the first letter of the FIRST name
+    let lastLetter = lastName.charAt(0).toUpperCase(); // <---- Capitalizing only the first letter of the LAST name
+    let newName = firstLetter + firstName.slice(1) + " " + lastLetter + lastName.slice(1); // <--- putting it all back together to make a capitalized name!
+    newArray.push(newName + " is " + array[i].occupation + "."); // <---- finally using the container and creating a sentence, all at once
+  }
+  return newArray; // <---- returning the container's values
+}
+
+console.log(jobPlusName(people))
+
+// Result:
+// console.log
+//     ford
+//       at jobPlusName (code-challenges.test.js:68:13)
+
+//     prefect
+//       at jobPlusName (code-challenges.test.js:70:13)
+
+//     F
+//       at jobPlusName (code-challenges.test.js:72:13)
+
+//     P
+//       at jobPlusName (code-challenges.test.js:74:13)
+
+//     Ford Prefect
+//       at jobPlusName (code-challenges.test.js:76:13)
+      
+// (It iterates through the rest of the array...)
+
+//       [
+//         'Ford Prefect is a hitchhiker.',
+//         'Zaphod Beeblebrox is president of the galaxy.',
+//         'Arthur Dent is a radio employee.'
+//       ]
+
+// WHAT I LEARNED: Console.log() is your friend. I used it on almost every line (I deleted them all to make it more readable) so I could track exactly what was happening and where. This problem took me the longest to figure out so, I left it for last. 
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
 
 // --------------------2) Create a function that takes in a mixed data array and returns an array of only the REMAINDERS of the numbers when divided by 3.
 
@@ -66,6 +148,7 @@ const hodgepodge2 = [5, "Hola", 43, -34, "greetings", true];
 // perform arr[i] = arr[i] % 3
 // return arr
 
+
 // FIRST ATTEMPT (USING .SPLICE())
 // const numRem = (array) => {
 //   for (let i = 0; i < array.length; i++) {
@@ -84,7 +167,9 @@ const hodgepodge2 = [5, "Hola", 43, -34, "greetings", true];
 //   return array; // result
 // };
 
+
 // What I learned: .splice() changes the original array. This means that when you take an index out, the next number becomes that index position. So if you take out the first index, the second number becomes the first index. This was causing .splice() to 'skip' certain values, based on whether the test passed or not.
+
 
 // SECOND ATTEMPT (USING .FILTER())
 const numRem = (array) => {
@@ -94,8 +179,8 @@ const numRem = (array) => {
   return result; // <----- return the result
 };
 
-numRem(hodgepodge1);
-numRem(hodgepodge2);
+console.log(numRem(hodgepodge1));
+console.log(numRem(hodgepodge2));
 
 // RESULT:
 // console.log
@@ -106,6 +191,9 @@ numRem(hodgepodge2);
 // at numRem (code-challenges.test.js:93:11)
 
 // What I learned: .filter() creates a new array, and .map() creates a new array. They do not change the original array, which makes iteration easier (and it hits all index positions too!).
+
+
+// ----------------------------------------------------------------------------------------------------
 
 
 // --------------------3) Create a function that takes in an array of numbers and returns the sum of all the numbers cubed.
@@ -140,6 +228,9 @@ describe("cubeSummer", () => {
   // .reduce() passes the return value to the next index   
 // return sum
 
+const cubeAndSum1 = [2, 3, 4];
+const cubeAndSum2 = [0, 5, 10];
+
 // FIRST ATTEMPT
 
 // const cubeSumer = (array) => {
@@ -150,17 +241,17 @@ describe("cubeSummer", () => {
 
 
 // SECOND ATTEMPT
-// This is the same code as my first attempt, but it shows how you can do the same thing on multiple lines. Both work just fine.
+// This is the same code as my first attempt, but it shows how you can do the same thing on multiple lines. I think it's more readable this way. Both work just fine, though.
 
 const cubeSumer = (array) => {
   let sum = array.map((value) => value ** 3) // <---- cube each value with i ** 3
   let sum2 = sum.reduce((previousValue, currentValue) => previousValue + currentValue); // <--- add all values with .reduce()
-  console.log(sum2) // <----- console.loggin 
+  // console.log(sum2) // <----- console.loggin 
   return sum2;
 }
 
-cubeSumer(cubeAndSum1);
-cubeSumer(cubeAndSum2);
+console.log(cubeSumer(cubeAndSum1));
+console.log(cubeSumer(cubeAndSum2));
 
 // RESULT:
 // console.log
